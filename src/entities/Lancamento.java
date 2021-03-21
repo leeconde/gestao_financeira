@@ -26,13 +26,13 @@ public class Lancamento {
   @Temporal(value = TemporalType.DATE)
   private Date data;
 
-  private boolean isParcelada;
+  private boolean parcelada;
 
   private int quantidadeParcelas;
 
   private double valorParcela;
 
-  private boolean isPago;
+  private boolean pago;
 
   public Lancamento() {
   }
@@ -51,7 +51,7 @@ public class Lancamento {
     this.observacao = observacao;
     this.valorTotal = valorTotal;
     this.data = data;
-    this.isParcelada = isParcelada;
+    this.parcelada = isParcelada;
     this.quantidadeParcelas = quantidadePacelas;
     this.valorParcela = valorParcela;
     this.tipo = tipo;
@@ -105,14 +105,6 @@ public class Lancamento {
     this.data = data;
   }
 
-  public boolean isIsParcelada() {
-    return isParcelada;
-  }
-
-  public void setIsParcelada(boolean isParcelada) {
-    this.isParcelada = isParcelada;
-  }
-
   public int getQuantidadeParcelas() {
     return quantidadeParcelas;
   }
@@ -129,11 +121,19 @@ public class Lancamento {
     this.valorParcela = valorParcela;
   }
 
-  public boolean isIsPago() {
-    return isPago;
+  public boolean isParcelada() {
+    return parcelada;
   }
 
-  public void setIsPago(boolean isPago) {
-    this.isPago = isPago;
+  public void setParcelada(boolean parcelada) {
+    this.parcelada = parcelada;
+  }
+
+  public boolean isPago() {
+    return pago;
+  }
+
+  public void setPago(boolean pago) {
+    this.pago = pago;
   }
 }

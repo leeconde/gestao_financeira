@@ -1,6 +1,13 @@
 package views;
 
+import dao.LancamentoDao;
+import entities.Lancamento;
+import java.text.SimpleDateFormat;
+import javax.swing.table.DefaultTableModel;
+
 public class LancamentosPanel extends javax.swing.JDialog {
+
+  private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
   /** Creates new form EntradasPanel */
   public LancamentosPanel(java.awt.Frame parent, boolean modal) {
@@ -9,6 +16,7 @@ public class LancamentosPanel extends javax.swing.JDialog {
     setLocationRelativeTo(null);
     setResizable(false);
     setTitle("Lançamentos");
+    atualizaTabela();
   }
 
   /** This method is called from within the constructor to
@@ -28,12 +36,13 @@ public class LancamentosPanel extends javax.swing.JDialog {
     txtDescricao = new javax.swing.JTextField();
     jPanel2 = new javax.swing.JPanel();
     jScrollPane1 = new javax.swing.JScrollPane();
-    jTable1 = new javax.swing.JTable();
+    tableLancamentos = new javax.swing.JTable();
     jPanel3 = new javax.swing.JPanel();
-    buttonLancar = new javax.swing.JButton();
+    buttonLancarEntrada = new javax.swing.JButton();
     buttonEditar = new javax.swing.JButton();
     buttonExcluir = new javax.swing.JButton();
     buttonFechar = new javax.swing.JButton();
+    buttonLancarSaida = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -41,7 +50,7 @@ public class LancamentosPanel extends javax.swing.JDialog {
 
     jLabel1.setText("Tipo");
 
-    comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Saída" }));
 
     jLabel2.setText("Descrição");
 
@@ -64,7 +73,7 @@ public class LancamentosPanel extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(jLabel2)
               .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(959, Short.MAX_VALUE))))
+            .addContainerGap(946, Short.MAX_VALUE))))
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,7 +93,7 @@ public class LancamentosPanel extends javax.swing.JDialog {
         .addContainerGap(45, Short.MAX_VALUE))
     );
 
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(
+    tableLancamentos.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
         {null, null, null, null, null, null, null, null, null, null},
         {null, null, null, null, null, null, null, null, null, null},
@@ -95,15 +104,22 @@ public class LancamentosPanel extends javax.swing.JDialog {
         "Código", "Tipo", "Descrição", "Observação", "Valor Total", "Data Lançamento", "Parcelada", "Quantidade Parcelas", "Valor Parcela", "Pago"
       }
     ) {
+      Class[] types = new Class [] {
+        java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+      };
       boolean[] canEdit = new boolean [] {
         false, false, false, false, false, false, false, false, false, false
       };
+
+      public Class getColumnClass(int columnIndex) {
+        return types [columnIndex];
+      }
 
       public boolean isCellEditable(int rowIndex, int columnIndex) {
         return canEdit [columnIndex];
       }
     });
-    jScrollPane1.setViewportView(jTable1);
+    jScrollPane1.setViewportView(tableLancamentos);
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
@@ -119,7 +135,7 @@ public class LancamentosPanel extends javax.swing.JDialog {
       .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
     );
 
-    buttonLancar.setText("Lançar");
+    buttonLancarEntrada.setText("Lançar Entrada");
 
     buttonEditar.setText("Editar");
 
@@ -132,13 +148,17 @@ public class LancamentosPanel extends javax.swing.JDialog {
       }
     });
 
+    buttonLancarSaida.setText("Lançar Saída");
+
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
     jPanel3Layout.setHorizontalGroup(
       jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel3Layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(buttonLancar)
+        .addComponent(buttonLancarEntrada)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(buttonLancarSaida)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(buttonEditar)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -152,10 +172,11 @@ public class LancamentosPanel extends javax.swing.JDialog {
       .addGroup(jPanel3Layout.createSequentialGroup()
         .addGap(29, 29, 29)
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(buttonLancar)
+          .addComponent(buttonLancarEntrada)
           .addComponent(buttonEditar)
           .addComponent(buttonExcluir)
-          .addComponent(buttonFechar))
+          .addComponent(buttonFechar)
+          .addComponent(buttonLancarSaida))
         .addContainerGap(40, Short.MAX_VALUE))
     );
 
@@ -183,6 +204,26 @@ public class LancamentosPanel extends javax.swing.JDialog {
   private void buttonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFecharActionPerformed
     this.dispose();
   }//GEN-LAST:event_buttonFecharActionPerformed
+
+  private void atualizaTabela() {
+    DefaultTableModel model = (DefaultTableModel) tableLancamentos.getModel();
+    model.setNumRows(0);
+
+    for (Lancamento lancamento : LancamentoDao.getInstance().findAll()) {
+      model.addRow(new Object[]{
+        lancamento.getId(),
+        lancamento.getTipo(),
+        lancamento.getDescricao(),
+        lancamento.getObservacao(),
+        lancamento.getValorTotal(),
+        sdf.format(lancamento.getData()),
+        lancamento.isParcelada(),
+        lancamento.getQuantidadeParcelas(),
+        lancamento.getValorParcela(),
+        lancamento.isPago()
+      });
+    }
+  }
 
   /**
    * @param args the command line arguments
@@ -238,7 +279,8 @@ public class LancamentosPanel extends javax.swing.JDialog {
   protected javax.swing.JButton buttonEditar;
   protected javax.swing.JButton buttonExcluir;
   protected javax.swing.JButton buttonFechar;
-  protected javax.swing.JButton buttonLancar;
+  protected javax.swing.JButton buttonLancarEntrada;
+  protected javax.swing.JButton buttonLancarSaida;
   protected javax.swing.JComboBox<String> comboTipo;
   protected javax.swing.JLabel jLabel1;
   protected javax.swing.JLabel jLabel2;
@@ -246,8 +288,7 @@ public class LancamentosPanel extends javax.swing.JDialog {
   protected javax.swing.JPanel jPanel2;
   protected javax.swing.JPanel jPanel3;
   protected javax.swing.JScrollPane jScrollPane1;
-  protected javax.swing.JTable jTable1;
+  protected javax.swing.JTable tableLancamentos;
   protected javax.swing.JTextField txtDescricao;
   // End of variables declaration//GEN-END:variables
-
 }
