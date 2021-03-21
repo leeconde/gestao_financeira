@@ -1,6 +1,6 @@
 package views;
 
-import dao.LancarOperacaoDao;
+import dao.LancamentoDao;
 import entities.Lancamento;
 import java.util.Date;
 import javax.swing.JDialog;
@@ -246,7 +246,7 @@ public class BasicOperationEditor extends JDialog {
       Lancamento lancarOperacaoEntrada = new Lancamento(descricao, observacao, valotTotal,
           dataEntrada, 'E');
 
-      LancarOperacaoDao.getInstance().createLancamento(lancarOperacaoEntrada);
+      LancamentoDao.getInstance().createLancamento(lancarOperacaoEntrada);
       this.dispose();
     }
     else if (tipo == 'S' && validarCampos()) {
@@ -260,12 +260,12 @@ public class BasicOperationEditor extends JDialog {
         double valorParcela = Double.parseDouble(txtValorParcela.getText());
         Lancamento lancarOperacaoSaida = new Lancamento(descricao, observacao, valotTotal,
             dataEntrada, true, quantidade, valorParcela, 'S');
-        LancarOperacaoDao.getInstance().createLancamento(lancarOperacaoSaida);
+        LancamentoDao.getInstance().createLancamento(lancarOperacaoSaida);
       }
       else {
         Lancamento lancarOperacaoSaida = new Lancamento(descricao, observacao, valotTotal,
             dataEntrada, 'S');
-        LancarOperacaoDao.getInstance().createLancamento(lancarOperacaoSaida);
+        LancamentoDao.getInstance().createLancamento(lancarOperacaoSaida);
       }
       this.dispose();
     }

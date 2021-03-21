@@ -5,20 +5,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class LancarOperacaoDao {
+public class LancamentoDao {
 
-  private static LancarOperacaoDao instance;
+  private static LancamentoDao instance;
 
   protected EntityManager entityManager;
 
-  public static LancarOperacaoDao getInstance() {
+  public static LancamentoDao getInstance() {
     if (instance == null) {
-      instance = new LancarOperacaoDao();
+      instance = new LancamentoDao();
     }
     return instance;
   }
 
-  private LancarOperacaoDao() {
+  private LancamentoDao() {
     entityManager = getEntityManager();
   }
 
