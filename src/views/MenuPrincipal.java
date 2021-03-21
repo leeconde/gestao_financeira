@@ -8,7 +8,7 @@ public class MenuPrincipal extends JFrame {
   /** Creates new form MenuPrincipal */
   public MenuPrincipal() {
     initComponents();
-    setLocationRelativeTo(null);
+    setExtendedState(JFrame.MAXIMIZED_BOTH);
   }
 
 
@@ -33,11 +33,11 @@ public class MenuPrincipal extends JFrame {
     jPanel2.setLayout(jPanel2Layout);
     jPanel2Layout.setHorizontalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 1046, Short.MAX_VALUE)
+      .addGap(0, 1071, Short.MAX_VALUE)
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 668, Short.MAX_VALUE)
+      .addGap(0, 682, Short.MAX_VALUE)
     );
 
     menuLancar.setText("Lançar");
@@ -63,6 +63,11 @@ public class MenuPrincipal extends JFrame {
     menuListar.setText("Listar");
 
     menuItemListarEntrada.setText("Entradas");
+    menuItemListarEntrada.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuItemListarEntradaActionPerformed(evt);
+      }
+    });
     menuListar.add(menuItemListarEntrada);
 
     menuItemListarSaida.setText("Saídas");
@@ -90,14 +95,19 @@ public class MenuPrincipal extends JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void menuItemLancarEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLancarEntradaActionPerformed
-    BasicOperationEditor lancarEntrada = new BasicOperationEditor(this, true, 'E');
+    BasicLancamentoEditor lancarEntrada = new BasicLancamentoEditor(this, true, 'E');
     lancarEntrada.setVisible(true);
   }//GEN-LAST:event_menuItemLancarEntradaActionPerformed
 
   private void menuItemLancarSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLancarSaidaActionPerformed
-    BasicOperationEditor lancarSaida = new BasicOperationEditor(this, true, 'S');
+    BasicLancamentoEditor lancarSaida = new BasicLancamentoEditor(this, true, 'S');
     lancarSaida.setVisible(true);
   }//GEN-LAST:event_menuItemLancarSaidaActionPerformed
+
+  private void menuItemListarEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListarEntradaActionPerformed
+    LancamentosPanel lancamentosPanel = new LancamentosPanel(this, true);
+    lancamentosPanel.setVisible(true);
+  }//GEN-LAST:event_menuItemListarEntradaActionPerformed
 
   /**
    * @param args the command line arguments

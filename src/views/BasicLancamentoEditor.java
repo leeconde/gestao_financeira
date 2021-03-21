@@ -7,12 +7,12 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class BasicOperationEditor extends JDialog {
+public class BasicLancamentoEditor extends JDialog {
 
   private char tipo;
 
   /** Creates new form BasicLancar */
-  public BasicOperationEditor(java.awt.Frame parent, boolean modal, char tipo) {
+  public BasicLancamentoEditor(java.awt.Frame parent, boolean modal, char tipo) {
     super(parent, modal);
     initComponents();
     setLocationRelativeTo(null);
@@ -21,7 +21,7 @@ public class BasicOperationEditor extends JDialog {
     desabilitaCamposParcela();
   }
 
-  private BasicOperationEditor(JFrame jFrame, boolean b) {
+  private BasicLancamentoEditor(JFrame jFrame, boolean b) {
     throw new UnsupportedOperationException("Not supported yet.");
   }
 
@@ -340,17 +340,21 @@ public class BasicOperationEditor extends JDialog {
       }
     }
     catch (ClassNotFoundException ex) {
-      java.util.logging.Logger.getLogger(BasicOperationEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(BasicLancamentoEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
     catch (InstantiationException ex) {
-      java.util.logging.Logger.getLogger(BasicOperationEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(BasicLancamentoEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
     catch (IllegalAccessException ex) {
-      java.util.logging.Logger.getLogger(BasicOperationEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(BasicLancamentoEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
     catch (javax.swing.UnsupportedLookAndFeelException ex) {
-      java.util.logging.Logger.getLogger(BasicOperationEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(BasicLancamentoEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
     //</editor-fold>
     //</editor-fold>
     //</editor-fold>
@@ -360,7 +364,7 @@ public class BasicOperationEditor extends JDialog {
     java.awt.EventQueue.invokeLater(new Runnable() {
 
       public void run() {
-        BasicOperationEditor dialog = new BasicOperationEditor(new javax.swing.JFrame(), true);
+        BasicLancamentoEditor dialog = new BasicLancamentoEditor(new javax.swing.JFrame(), true);
         dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
           @Override
